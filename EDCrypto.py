@@ -130,6 +130,7 @@ class MainDialog(wx.Dialog):
         wx.Log().SetLogLevel(0)
         wx.Dialog.__init__(self,parent=None,id=-1,title = u'常用工具',size = (960,600))
         
+        self.SetIcon(wx.Icon("images/title.ico"))
         self.SetWindowStyle(self.GetWindowStyle() | wx.MINIMIZE_BOX)
         
         #创建子空间
