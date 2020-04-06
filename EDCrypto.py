@@ -7,6 +7,7 @@ from hashlib import md5, sha1
 import base64
 import struct
 import random
+import sitecustomize
 
 
 #定义
@@ -336,9 +337,15 @@ class MainDialog(wx.Dialog):
         if encrypto_content == "":
             return
         
-        decrypto_content = base64.b64encode(encrypto_content)
-
-        self.text_decode_content.SetValue(decrypto_content)
+        try:
+            decrypto_content = base64.b64encode(encrypto_content.encode("utf-8"))
+            self.text_decode_content.SetValue(decrypto_content.decode("utf-8"))
+        except TypeError, e:
+            wx.MessageBox(unicode(e), u"错误提示", wx.OK, self)
+        except:
+            wx.MessageBox(u"BASE64加密错误", u"错误提示", wx.OK, self)
+            
+        
     
     def OnClickedBase64Decrypto(self, evt):
         
@@ -347,8 +354,8 @@ class MainDialog(wx.Dialog):
             return
         
         try:
-            encrypto_content = base64.b64decode(decrypto_content)    
-            self.text_encode_content.SetValue(encrypto_content)
+            encrypto_content = base64.b64decode(decrypto_content.encode("utf-8"))    
+            self.text_encode_content.SetValue(encrypto_content.decode("utf-8"))
         except TypeError, e:
             wx.MessageBox(unicode(e), u"错误提示", wx.OK, self)
         except:
